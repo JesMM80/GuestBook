@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conference Guestbook {{ conference }} {% endblock %}
+
+{% block body %}
+    <h2>{{ conference }} Conference</h2>
+
+    {# El pipe (|) en Twig es una característica específica del lenguaje de plantillas de Twig para aplicar filtros #}
+    {% if comments|length > 0 %}
+        {% for comments in comment %}
+            {% if comment.photofilename %}
+                <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" style="max-width: 200px" />
+            {% endif %}
+            
+            <h4>{{ comment.author }}</h4>
+            <small>
+                {{ comment.createdAt|format_datetime('medium', 'short') }}
+            </small>
+            <p>{{ comment.text }}</p>
+        
+
+
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+             
+
