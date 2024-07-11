@@ -7,7 +7,9 @@
 
     {# El pipe (|) en Twig es una característica específica del lenguaje de plantillas de Twig para aplicar filtros #}
     {% if comments|length > 0 %}
-        {% for comments in comment %}
+        
+        <div>There are {{ comments|length }} comments.</div>
+        {% for comment in comments %}
             {% if comment.photofilename %}
                 <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" style="max-width: 200px" />
             {% endif %}
@@ -17,11 +19,21 @@
                 {{ comment.createdAt|format_datetime('medium', 'short') }}
             </small>
             <p>{{ comment.text }}</p>
-        
-
-
         {% endfor %}
+
+        {% if previous >= 0 %}
+            <a href="{{ path('conference', { id: conference.id, offset: previous }) }}">Previous</a>
+        {% endif %}
+        {% if next < comments|length %}
+            <a href="{{ path('conference', { id: conference.id, offset: next }) }}">Next</a>
+        {% endif %}
+
+    {% else %}            
+        <div>No comments have been posted yet for this conference.</div>
     {% endif %}
 {% endblock %}
+    
+        
+    
              
 
